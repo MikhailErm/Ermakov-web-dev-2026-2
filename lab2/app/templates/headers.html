@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mt-5">Заголовки запроса</h1>
+<ul class="list-group mt-3">
+    {% for key, value in headers.items() %}
+    <li class="list-group-item"><strong>{{ key }}</strong>: {{ value }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

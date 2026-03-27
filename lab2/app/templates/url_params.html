@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mt-5">Параметры URL</h1>
+{% if params %}
+<ul class="list-group mt-3">
+    {% for key, value in params.items() %}
+    <li class="list-group-item"><strong>{{ key }}</strong>: {{ value }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="mt-3">Параметры URL отсутствуют.</p>
+{% endif %}
+{% endblock %}

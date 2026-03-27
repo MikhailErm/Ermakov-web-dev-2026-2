@@ -16,13 +16,14 @@ def test_headers_displayed(client):
 # 3. Установка cookie, если оно не было установлено
 def test_cookie_set_if_missing(client):
     response = client.get('/cookies')
-    assert b'lab_test_cookie=123456' in response.headers.get('Set-Cookie', b'')
+    assert 'lab_test_cookie=123456' in response.headers.get('Set-Cookie', '')
 
 # 4. Удаление cookie, если оно уже установлено
 def test_cookie_deleted_if_present(client):
-    client.set_cookie('localhost', 'lab_test_cookie', '123456')
+    client.set_cookie('lab_test_cookie', '123456')
     response = client.get('/cookies')
-    assert b'lab_test_cookie=;' in response.headers.get('Set-Cookie', b'') or b'Expires=Thu, 01 Jan 1970' in response.headers.get('Set-Cookie', b'')
+    cookie_header = response.headers.get('Set-Cookie', '')
+    assert 'lab_test_cookie=;' in cookie_header or 'Expires=Thu, 01 Jan 1970' in cookie_header or 'Max-Age=0' in cookie_header
 
 # 5. Отображение параметров формы после POST-запроса
 def test_form_params_displayed(client):

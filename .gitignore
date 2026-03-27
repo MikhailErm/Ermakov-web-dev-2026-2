@@ -1,2 +1,4 @@
 .env
 requirements.txt
+.pytest_cache
+__pycache__

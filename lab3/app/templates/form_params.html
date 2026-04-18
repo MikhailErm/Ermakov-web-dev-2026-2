@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mt-5">Параметры формы</h1>
+<form method="POST" class="mt-3 border p-4 rounded">
+    <div class="mb-3">
+        <label for="testInput" class="form-label">Тестовое поле</label>
+        <input type="text" class="form-control" id="testInput" name="testInput" placeholder="Введите что-нибудь">
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+
+{% if form_data is not none %}
+<h3 class="mt-4">Переданные данные POST:</h3>
+<ul class="list-group">
+    {% for key, value in form_data.items() %}
+    <li class="list-group-item"><strong>{{ key }}</strong>: {{ value }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_user_form %}
+{% block content %}
+<h2>Редактирование пользователя</h2>
+{{ render_user_form(roles, user=user, errors=errors, is_edit=True) }}
+{% endblock %}

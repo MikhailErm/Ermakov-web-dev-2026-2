@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Журнал посещений</h2>
+{% if current_user.role.name == 'Администратор' %}
+<div class="mb-3">
+    <a href="{{ url_for('stats.pages_report') }}" class="btn btn-outline-primary">Отчет по страницам</a>
+    <a href="{{ url_for('stats.users_report') }}" class="btn btn-outline-primary">Отчет по пользователям</a>
+</div>
+{% endif %}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>№</th>
+            <th>Пользователь</th>
+            <th>Страница</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs.items %}
+        <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.user.full_name if log.user else 'Неаутентифицированный пользователь' }}</td>
+            <td>{{ log.path }}</td>
+            <td>{{ log.created_at.strftime('%d.%m.%Y %H:%M:%S') if log.created_at else '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav>
+  <ul class="pagination">
+    {% for page_num in logs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        <li class="page-item {% if page_num == logs.page %}active{% endif %}">
+          <a class="page-link" href="{{ url_for('stats.journal', page=page_num) }}">{{ page_num }}</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>
+{% endblock %}
